@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema id="KakeiboDataSet" targetNamespace="http://tempuri.org/KakeiboDataSet.xsd" xmlns:mstns="http://tempuri.org/KakeiboDataSet.xsd" xmlns="http://tempuri.org/KakeiboDataSet.xsd" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata" xmlns:msprop="urn:schemas-microsoft-com:xml-msprop" attributeFormDefault="qualified" elementFormDefault="qualified">
+  <xs:annotation>
+    <xs:appinfo source="urn:schemas-microsoft-com:xml-msdatasource">
+      <DataSource DefaultConnectionIndex="0" FunctionsComponentName="QueriesTableAdapter" Modifier="AutoLayout, AnsiClass, Class, Public" SchemaSerializationMode="IncludeSchema" xmlns="urn:schemas-microsoft-com:xml-msdatasource">
+        <Connections />
+        <Tables />
+        <Sources />
+      </DataSource>
+    </xs:appinfo>
+  </xs:annotation>
+  <xs:element name="KakeiboDataSet" msdata:IsDataSet="true" msdata:UseCurrentLocale="true" msprop:EnableTableAdapterManager="true" msprop:Generator_UserDSName="KakeiboDataSet" msprop:Generator_DataSetName="KakeiboDataSet">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element name="kakeiboDataTable" msprop:Generator_RowEvHandlerName="kakeiboDataTableRowChangeEventHandler" msprop:Generator_RowDeletedName="kakeiboDataTableRowDeleted" msprop:Generator_RowDeletingName="kakeiboDataTableRowDeleting" msprop:Generator_RowEvArgName="kakeiboDataTableRowChangeEvent" msprop:Generator_TablePropName="kakeiboDataTable" msprop:Generator_RowChangedName="kakeiboDataTableRowChanged" msprop:Generator_RowChangingName="kakeiboDataTableRowChanging" msprop:Generator_TableClassName="kakeiboDataTableDataTable" msprop:Generator_RowClassName="kakeiboDataTableRow" msprop:Generator_TableVarName="tablekakeiboDataTable" msprop:Generator_UserTableName="kakeiboDataTable">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="ID" msprop:Generator_ColumnPropNameInRow="ID" msprop:Generator_ColumnPropNameInTable="IDColumn" msprop:Generator_ColumnVarNameInTable="columnID" msprop:Generator_UserColumnName="ID" type="xs:int" minOccurs="0" />
+              <xs:element name="日付" msprop:Generator_ColumnPropNameInRow="日付" msprop:Generator_ColumnPropNameInTable="日付Column" msprop:Generator_ColumnVarNameInTable="column日付" msprop:Generator_UserColumnName="日付" type="xs:dateTime" minOccurs="0" />
+              <xs:element name="カテゴリ" msprop:Generator_ColumnPropNameInRow="カテゴリ" msprop:Generator_ColumnPropNameInTable="カテゴリColumn" msprop:Generator_ColumnVarNameInTable="columnカテゴリ" msprop:Generator_UserColumnName="カテゴリ" type="xs:string" minOccurs="0" />
+              <xs:element name="金額" msprop:Generator_ColumnPropNameInRow="金額" msprop:Generator_ColumnPropNameInTable="金額Column" msprop:Generator_ColumnVarNameInTable="column金額" msprop:Generator_UserColumnName="金額" type="xs:int" minOccurs="0" />
+              <xs:element name="メモ" msprop:Generator_ColumnPropNameInRow="メモ" msprop:Generator_ColumnPropNameInTable="メモColumn" msprop:Generator_ColumnVarNameInTable="columnメモ" msprop:Generator_UserColumnName="メモ" type="xs:string" minOccurs="0" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+</xs:schema>
