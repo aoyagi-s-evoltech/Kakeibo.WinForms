@@ -61,7 +61,6 @@
             this.registerButton.TabIndex = 0;
             this.registerButton.Text = "登録";
             this.registerButton.UseVisualStyleBackColor = true;
-
             // 
             // editButton
             // 
@@ -103,7 +102,7 @@
             // 
             // category
             // 
-            this.category.Location = new System.Drawing.Point(92, 269);
+            this.category.Location = new System.Drawing.Point(92, 284);
             this.category.Name = "category";
             this.category.Size = new System.Drawing.Size(368, 25);
             this.category.TabIndex = 4;
