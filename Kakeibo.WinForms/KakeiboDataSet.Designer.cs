@@ -399,10 +399,10 @@ namespace Kakeibo.WinForms {
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "18.0.0.0")]
-            public kakeiboDataTableRow AddkakeiboDataTableRow(int ID, System.DateTime 日付, string カテゴリ, int 金額, string メモ) {
+            public kakeiboDataTableRow AddkakeiboDataTableRow(System.DateTime 日付, string カテゴリ, int 金額, string メモ) {
                 kakeiboDataTableRow rowkakeiboDataTableRow = ((kakeiboDataTableRow)(this.NewRow()));
                 object[] columnValuesArray = new object[] {
-                        ID,
+                        null,
                         日付,
                         カテゴリ,
                         金額,
@@ -449,6 +449,10 @@ namespace Kakeibo.WinForms {
                 base.Columns.Add(this.column金額);
                 this.columnメモ = new global::System.Data.DataColumn("メモ", typeof(string), null, global::System.Data.MappingType.Element);
                 base.Columns.Add(this.columnメモ);
+                this.columnID.AutoIncrement = true;
+                this.columnID.AutoIncrementSeed = 1;
+                this.columnID.AllowDBNull = false;
+                this.columnID.ReadOnly = true;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
@@ -593,12 +597,7 @@ namespace Kakeibo.WinForms {
             [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "18.0.0.0")]
             public int ID {
                 get {
-                    try {
-                        return ((int)(this[this.tablekakeiboDataTable.IDColumn]));
-                    }
-                    catch (global::System.InvalidCastException e) {
-                        throw new global::System.Data.StrongTypingException("テーブル \'kakeiboDataTable\' にある列 \'ID\' の値は DBNull です。", e);
-                    }
+                    return ((int)(this[this.tablekakeiboDataTable.IDColumn]));
                 }
                 set {
                     this[this.tablekakeiboDataTable.IDColumn] = value;
@@ -667,18 +666,6 @@ namespace Kakeibo.WinForms {
                 set {
                     this[this.tablekakeiboDataTable.メモColumn] = value;
                 }
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "18.0.0.0")]
-            public bool IsIDNull() {
-                return this.IsNull(this.tablekakeiboDataTable.IDColumn);
-            }
-            
-            [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-            [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Data.Design.TypedDataSetGenerator", "18.0.0.0")]
-            public void SetIDNull() {
-                this[this.tablekakeiboDataTable.IDColumn] = global::System.Convert.DBNull;
             }
             
             [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
