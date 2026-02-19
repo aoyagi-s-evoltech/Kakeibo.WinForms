@@ -1,146 +1,133 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.IO;
 using System.Windows.Forms;
 
 namespace Kakeibo.WinForms
 {
     public partial class Form1 : Form
     {
+        private IExpenseRepository repository;
         public Form1()
         {
             InitializeComponent();
         }
 
         /// <summary>
-        /// ユーザーから入力された内容をもとに、DataTableにあたらしい行を追加する
-        /// </summary>
-        /// <param name="sender">クリックされた登録ボタン</param>
-        /// <param name="e">クリックイベントの情報</param>
-        private void registerButton_Click(object sender, EventArgs e)
-        {
-            // DataTableにデータを追加する
-            kakeiboDataSet.kakeiboDataTable.AddkakeiboDataTableRow(
-                dateTimePicker.Value,
-                this.category.Text,
-                int.Parse(this.price.Text),
-                this.memo.Text
-            );
-        }
-
-        private void editButton_Click(object sender, EventArgs e)
-        {
-            // 選択された行のデータを編集する
-            int rowIndex = this.kakeiboDataGrid.CurrentRow.Index;
-
-            var row = this.kakeiboDataSet.kakeiboDataTable[rowIndex];
-
-            // 入力欄の内容で上書き（＝編集）
-            row.日付 = dateTimePicker.Value;
-            row.カテゴリ = category.Text; 
-            row.金額 = int.Parse(price.Text);
-            row.メモ = memo.Text;
-        }
-
-        /// <summary>
-        /// 選択された行データ行を削除する
-        /// </summary>
-        /// <param name="sender">クリックされた削除ボタン</param>
-        /// <param name="e">クリックイベントの情報</param>
-        private void deleteButton_Click(object sender, EventArgs e)
-        {
-            // 選択した行のデータを削除する
-            int row = this.kakeiboDataGrid.CurrentRow.Index;
-            this.kakeiboDataGrid.Rows.RemoveAt(row);
-        }
-
-        /// <summary>
-        /// アプリ起動時に実行される初期化処理
-        /// SQLiteデータベースへ接続し、
-        /// 読み込んだデータをDataTableに反映する
+        /// アプリ起動時にRepositoryを選択し、データを読み込む
         /// </summary>
         /// <param name="sender">フォーム本体</param>
         /// <param name="e">イベント情報</param>
         /// <remarks>
-        /// 初回起動時のみテーブルを作成
-        /// 読み込んだデータはDataTableに反映され、DataGridViewに表示される
+        /// SQLiteが存在する場合はSQLiteを、存在しない場合はXMLを使用する
         /// </remarks>
         private void Form1_Load(object sender, EventArgs e)
         {
-            // SQLiteに接続
-            using (var connection = new SqliteConnection("Data Source = kakeibo.db"))
+            // SQLiteが存在するか確認し、存在しない場合は新規作成する
+            if (File.Exists("expenses.db"))
             {
-                connection.Open();
-
-                CreateTableIfNotExists(connection);
-                LoadExpensesToDataTable(connection);
+                repository = new SqliteExpenseRepository();
             }
+            else
+            {
+                // 後で作成
+                repository = new XmlExpenseRepository();
+            }
+            Reload();
         }
 
         /// <summary>
-        /// expensesテーブルが存在しない場合のみテーブルを作成する
+        /// Repositoryから最新のデータを取得し、DataGridViewに表示する
         /// </summary>
-        /// <param name="connection">SQLiteの接続</param>
         /// <remarks>
-        /// 既存テーブルがある場合にエラーが起きることを防ぐため
-        /// CREATE TABLEにIF NOT EXISTSを付けている
-        private void CreateTableIfNotExists(SqliteConnection connection)
-        {
-            // 存在しない場合、テーブルを作成。
-            string createTableSql = @"
-                    CREATE TABLE IF NOT EXISTS expenses (
-                        Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                        Date TEXT,
-                        Category TEXT,
-                        Amount INTEGER,
-                        Memo TEXT 
-                        );
-                    ";
-
-            using (var command = new SqliteCommand(createTableSql, connection))
-            { 
-                command.ExecuteNonQuery();
-            }   
-        }
-
-        /// <summary>
-        /// SQLiteから全件のデータを取得し、
-        /// DataTableに反映する
-        /// </summary>
-        /// <param name="connection">SQLiteの接続</param>
-        /// <remarks>
-        /// SQLiteから取得したデータをDataTableに入れ直し、
-        /// DataGridVie の表示を最新の状態に更新する
+        /// DBまたはXMLの内容を画面に反映させるための共通処理
         /// </remarks>
-        private void LoadExpensesToDataTable(SqliteConnection connection)
+        private void Reload()
         {
-            string selectSql = "SELECT Id, Date, Category, Amount, Memo FROM expenses";
+            // Repositoryから最新データを取得
+            var items = repository.GetAll();
 
-            using (var selectCommand = new SqliteCommand(selectSql, connection))
-            using (var reader = selectCommand.ExecuteReader())
+            // DataTableをクリア
+            kakeiboDataSet.kakeiboDataTable.Clear();
+
+            // DataTableにデータを追加
+            foreach (var expense in items)
             {
-                // DataTableをクリア
-                kakeiboDataSet.kakeiboDataTable.Clear();
-
-                // 1行ずつ読み込みDataTableに追加
-                while (reader.Read())
-                {
-                    // SQLiteのTEXTをDateTimeに変換
-                    DateTime date = DateTime.Parse(reader["Date"].ToString());
-
-                    kakeiboDataSet.kakeiboDataTable.AddkakeiboDataTableRow(
-                        date,
-                        reader["Category"].ToString(),
-                        int.Parse(reader["Amount"].ToString()),
-                        reader["Memo"].ToString()
-                    );
-                }
+                kakeiboDataSet.kakeiboDataTable.AddkakeiboDataTableRow(
+                    expense.Date,
+                    expense.Category,
+                    expense.Price,
+                    expense.Memo
+                );
             }
+        }
+
+        /// <summary>
+        /// ユーザーから入力された内容をもとに、あたらしい支出データを作成し、Repositoryに保存する
+        /// </summary>
+        /// <param name="sender">クリックされた登録ボタン</param>
+        /// <param name="e">クリックイベントの情報</param>
+        /// <remarks>
+        /// 更新後はReload()で画面を最新状態にする
+        /// </remarks>
+        private void registerButton_Click(object sender, EventArgs e)
+        {
+            var expense = new Expense
+            {
+                Date = dateTimePicker.Value,
+                Category = category.Text,
+                Price = int.Parse(price.Text),
+                Memo = memo.Text
+            };
+
+            repository.Insert(expense);
+            Reload();
+        }
+
+        /// <summary>
+        /// 選択された支出データを入力欄の内容で更新する
+        /// </summary>
+        /// <param name="sender">クリックされた編集ボタン</param>
+        /// <param name="e">クリックイベントの情報</param>
+        /// <remarks>
+        /// DataGridViewからIDを取得し、該当データのみを更新する
+        /// 更新後はReload()で画面を最新状態にする
+        /// </remarks>
+        private void editButton_Click(object sender, EventArgs e)
+        {
+            // 選択された行のデータを編集する
+            int rowIndex = kakeiboDataGrid.CurrentRow.Index;
+            int id = (int)kakeiboDataGrid.Rows[rowIndex].Cells["Id"].Value;
+
+            var expense = new Expense
+            {
+                Id = id,
+                Date = dateTimePicker.Value,
+                Category = category.Text,
+                Price = int.Parse(price.Text),
+                Memo = memo.Text
+            }; 
+            
+            repository.Update(expense);
+            Reload();
+        }
+
+        /// <summary>
+        /// 選択された支出データを削除する
+        /// </summary>
+        /// <param name="sender">クリックされた削除ボタン</param>
+        /// <param name="e">クリックイベントの情報</param>
+        /// <remarks>
+        /// DataGridViewからIDを取得し、該当データのみを削除する
+        /// 更新後はReload()で画面を最新状態にする
+        /// </remarks>
+        private void deleteButton_Click(object sender, EventArgs e)
+        {
+            // 選択した行のデータを削除する
+            int rowIndex = kakeiboDataGrid.CurrentRow.Index;
+            int id = (int)kakeiboDataGrid.Rows[rowIndex].Cells["Id"].Value;
+
+            repository.Delete(id);
+            Reload();
         }
     }
 }
