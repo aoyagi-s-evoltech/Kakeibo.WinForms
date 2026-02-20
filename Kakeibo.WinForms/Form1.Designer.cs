@@ -61,7 +61,7 @@
             this.registerButton.TabIndex = 0;
             this.registerButton.Text = "登録";
             this.registerButton.UseVisualStyleBackColor = true;
-
+            this.registerButton.Click += new System.EventHandler(this.registerButton_Click);
             // 
             // editButton
             // 
@@ -71,7 +71,7 @@
             this.editButton.TabIndex = 1;
             this.editButton.Text = "編集";
             this.editButton.UseVisualStyleBackColor = true;
-            this.editButton.Click += new System.EventHandler(this.EditButtonClicked);
+            this.editButton.Click += new System.EventHandler(this.editButton_Click);
             // 
             // deleteButton
             // 
@@ -81,7 +81,7 @@
             this.deleteButton.TabIndex = 2;
             this.deleteButton.Text = "削除";
             this.deleteButton.UseVisualStyleBackColor = true;
-            this.deleteButton.Click += new System.EventHandler(this.DeleteButtonClicked);
+            this.deleteButton.Click += new System.EventHandler(this.deleteButton_Click);
             // 
             // kakeiboDataGrid
             // 
@@ -94,11 +94,11 @@
             this.金額DataGridViewTextBoxColumn,
             this.メモDataGridViewTextBoxColumn});
             this.kakeiboDataGrid.DataSource = this.kakeiboDataTableBindingSource;
-            this.kakeiboDataGrid.Location = new System.Drawing.Point(13, 12);
+            this.kakeiboDataGrid.Location = new System.Drawing.Point(27, 12);
             this.kakeiboDataGrid.Name = "kakeiboDataGrid";
             this.kakeiboDataGrid.RowHeadersWidth = 62;
             this.kakeiboDataGrid.RowTemplate.Height = 27;
-            this.kakeiboDataGrid.Size = new System.Drawing.Size(775, 197);
+            this.kakeiboDataGrid.Size = new System.Drawing.Size(818, 197);
             this.kakeiboDataGrid.TabIndex = 3;
             // 
             // category
@@ -171,6 +171,7 @@
             this.iDDataGridViewTextBoxColumn.HeaderText = "ID";
             this.iDDataGridViewTextBoxColumn.MinimumWidth = 8;
             this.iDDataGridViewTextBoxColumn.Name = "iDDataGridViewTextBoxColumn";
+            this.iDDataGridViewTextBoxColumn.ReadOnly = true;
             this.iDDataGridViewTextBoxColumn.Width = 150;
             // 
             // 日付DataGridViewTextBoxColumn
@@ -219,7 +220,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 18F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(800, 450);
+            this.ClientSize = new System.Drawing.Size(859, 450);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.memo);
             this.Controls.Add(this.label3);
@@ -234,6 +235,7 @@
             this.Controls.Add(this.registerButton);
             this.Name = "Form1";
             this.Text = "Form1";
+            this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.kakeiboDataGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.kakeiboDataTableBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.kakeiboDataSet)).EndInit();
