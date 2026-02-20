@@ -26,10 +26,12 @@ namespace Kakeibo.WinForms
             if (File.Exists("expenses.db"))
             {
                 repository = new SqliteExpenseRepository();
+
+                repository.GetAll();
             }
             else
             {
-                // 後で作成
+                
                 repository = new XmlExpenseRepository();
             }
             Reload();
