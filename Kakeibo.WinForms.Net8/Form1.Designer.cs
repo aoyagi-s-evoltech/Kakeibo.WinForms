@@ -139,12 +139,13 @@
             // 
             // editButton
             // 
-            editButton.Location = new Point(822, 464);
+            editButton.Location = new Point(821, 464);
             editButton.Name = "editButton";
             editButton.Size = new Size(112, 34);
             editButton.TabIndex = 6;
             editButton.Text = "編集";
             editButton.UseVisualStyleBackColor = true;
+            editButton.Click += editButton_Click;
             // 
             // deleteButton
             // 
@@ -154,6 +155,7 @@
             deleteButton.TabIndex = 7;
             deleteButton.Text = "削除";
             deleteButton.UseVisualStyleBackColor = true;
+            deleteButton.Click += deleteButton_Click;
             // 
             // clearButton
             // 
