@@ -21,7 +21,7 @@ namespace Kakeibo.WinForms.Net8
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            if(File.Exists("expenses.db"))
+            if (File.Exists("expenses.db"))
             {
                 repository = new SqliteExpenseRepository();
             }
@@ -44,7 +44,8 @@ namespace Kakeibo.WinForms.Net8
             {
                 Name = "Id",
                 HeaderText = "ID",
-                DataPropertyName = "Id"
+                DataPropertyName = "Id",
+                Visible = false
             });
 
             kakeiboDataGrid.Columns.Add(new DataGridViewTextBoxColumn
@@ -164,6 +165,7 @@ namespace Kakeibo.WinForms.Net8
         {
             datePicker.Value = DateTime.Today;
             categoryText.SelectedIndex = -1;
+            categoryText.Text = "";
             priceText.Text = "";
             memoText.Text = "";
         }
@@ -179,18 +181,9 @@ namespace Kakeibo.WinForms.Net8
         {
         }
 
-        private void registerButton_Click_1(object sender, EventArgs e)
+        private void clearButton_BindingContextChanged(object sender, EventArgs e)
         {
-            var expense = new Expense
-                {
-                    Date = datePicker.Value,
-                    Category = categoryText.Text,
-                    Price = int.Parse(priceText.Text),
-                    Memo = memoText.Text
-                };
 
-            repository.Insert(expense);
-            Reload();
         }
     }
 }
