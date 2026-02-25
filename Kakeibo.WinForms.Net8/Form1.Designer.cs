@@ -48,7 +48,6 @@
             kakeiboDataGrid.RowHeadersWidth = 62;
             kakeiboDataGrid.Size = new Size(1032, 355);
             kakeiboDataGrid.TabIndex = 0;
-            kakeiboDataGrid.CellContentClick += kakeiboDataGrid_CellContentClick;
             // 
             // datePicker
             // 
@@ -56,7 +55,6 @@
             datePicker.Name = "datePicker";
             datePicker.Size = new Size(300, 31);
             datePicker.TabIndex = 1;
-            datePicker.ValueChanged += dateTimePicker1_ValueChanged;
             // 
             // categoryText
             // 
@@ -66,7 +64,6 @@
             categoryText.Name = "categoryText";
             categoryText.Size = new Size(300, 33);
             categoryText.TabIndex = 2;
-            categoryText.SelectedIndexChanged += category_SelectedIndexChanged;
             // 
             // priceText
             // 
@@ -120,7 +117,6 @@
             clearButton.TabIndex = 8;
             clearButton.Text = "クリア";
             clearButton.UseVisualStyleBackColor = true;
-            clearButton.BindingContextChanged += clearButton_BindingContextChanged;
             clearButton.Click += clearButton_Click;
             // 
             // Form1
