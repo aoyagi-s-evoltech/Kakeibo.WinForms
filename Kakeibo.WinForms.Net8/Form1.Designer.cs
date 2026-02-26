@@ -37,6 +37,10 @@
             editButton = new Button();
             deleteButton = new Button();
             clearButton = new Button();
+            label1 = new Label();
+            label2 = new Label();
+            label3 = new Label();
+            label4 = new Label();
             ((System.ComponentModel.ISupportInitialize)kakeiboDataGrid).BeginInit();
             SuspendLayout();
             // 
@@ -51,38 +55,39 @@
             // 
             // datePicker
             // 
-            datePicker.Location = new Point(89, 393);
+            datePicker.Location = new Point(159, 397);
             datePicker.Name = "datePicker";
-            datePicker.Size = new Size(300, 31);
+            datePicker.Size = new Size(449, 31);
             datePicker.TabIndex = 1;
             // 
             // categoryText
             // 
             categoryText.FormattingEnabled = true;
-            categoryText.Location = new Point(89, 441);
+            categoryText.Items.AddRange(new object[] { "食費", "日用品", "衣服", "交通費", "固定費", "医療", "交際費", "娯楽", "美容", "その他" });
+            categoryText.Location = new Point(159, 447);
             categoryText.Name = "categoryText";
-            categoryText.Size = new Size(300, 33);
+            categoryText.Size = new Size(449, 33);
             categoryText.TabIndex = 2;
             // 
             // priceText
             // 
-            priceText.Location = new Point(88, 510);
+            priceText.Location = new Point(159, 507);
             priceText.Name = "priceText";
-            priceText.Size = new Size(301, 31);
+            priceText.Size = new Size(449, 31);
             priceText.TabIndex = 3;
             // 
             // memoText
             // 
-            memoText.Location = new Point(89, 574);
+            memoText.Location = new Point(159, 562);
             memoText.Name = "memoText";
-            memoText.Size = new Size(300, 31);
+            memoText.Size = new Size(449, 31);
             memoText.TabIndex = 4;
             // 
             // registerButton
             // 
-            registerButton.Location = new Point(661, 464);
+            registerButton.Location = new Point(725, 448);
             registerButton.Name = "registerButton";
-            registerButton.Size = new Size(112, 34);
+            registerButton.Size = new Size(81, 73);
             registerButton.TabIndex = 5;
             registerButton.Text = "追加";
             registerButton.UseVisualStyleBackColor = true;
@@ -90,36 +95,79 @@
             // 
             // editButton
             // 
-            editButton.Location = new Point(822, 464);
+            editButton.Location = new Point(848, 447);
             editButton.Name = "editButton";
-            editButton.Size = new Size(112, 34);
+            editButton.Size = new Size(89, 74);
             editButton.TabIndex = 6;
             editButton.Text = "編集";
             editButton.UseVisualStyleBackColor = true;
+            editButton.Click += editButton_Click;
             // 
             // deleteButton
             // 
-            deleteButton.Location = new Point(960, 464);
+            deleteButton.Location = new Point(985, 447);
             deleteButton.Name = "deleteButton";
-            deleteButton.Size = new Size(112, 34);
+            deleteButton.Size = new Size(87, 74);
             deleteButton.TabIndex = 7;
             deleteButton.Text = "削除";
             deleteButton.UseVisualStyleBackColor = true;
+            deleteButton.Click += deleteButton_Click;
             // 
             // clearButton
             // 
-            clearButton.Location = new Point(428, 556);
+            clearButton.Location = new Point(630, 539);
             clearButton.Name = "clearButton";
             clearButton.Size = new Size(112, 34);
             clearButton.TabIndex = 8;
             clearButton.Text = "クリア";
             clearButton.UseVisualStyleBackColor = true;
+            clearButton.Click += clearButton_Click;
+            // 
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(40, 402);
+            label1.Name = "label1";
+            label1.Size = new Size(48, 25);
+            label1.TabIndex = 9;
+            label1.Text = "日付";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(40, 455);
+            label2.Name = "label2";
+            label2.Size = new Size(64, 25);
+            label2.TabIndex = 10;
+            label2.Text = "カテゴリ";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(40, 507);
+            label3.Name = "label3";
+            label3.Size = new Size(48, 25);
+            label3.TabIndex = 11;
+            label3.Text = "金額";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(40, 562);
+            label4.Name = "label4";
+            label4.Size = new Size(38, 25);
+            label4.TabIndex = 12;
+            label4.Text = "メモ";
             // 
             // Form1
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1120, 624);
+            Controls.Add(label4);
+            Controls.Add(label3);
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(clearButton);
             Controls.Add(deleteButton);
             Controls.Add(editButton);
