@@ -1,6 +1,6 @@
 ﻿namespace Kakeibo.WinForms.Net8
 {
-    partial class Form1
+    partial class Kakeibo
     {
         /// <summary>
         ///  Required designer variable.
@@ -37,6 +37,10 @@
             editButton = new Button();
             deleteButton = new Button();
             clearButton = new Button();
+            label1 = new Label();
+            label2 = new Label();
+            label3 = new Label();
+            label4 = new Label();
             ((System.ComponentModel.ISupportInitialize)kakeiboDataGrid).BeginInit();
             SuspendLayout();
             // 
@@ -51,38 +55,38 @@
             // 
             // datePicker
             // 
-            datePicker.Location = new Point(89, 393);
+            datePicker.Location = new Point(151, 388);
             datePicker.Name = "datePicker";
-            datePicker.Size = new Size(300, 31);
+            datePicker.Size = new Size(489, 31);
             datePicker.TabIndex = 1;
             // 
             // categoryText
             // 
             categoryText.FormattingEnabled = true;
-            categoryText.Location = new Point(89, 441);
+            categoryText.Location = new Point(151, 441);
             categoryText.Name = "categoryText";
-            categoryText.Size = new Size(300, 33);
+            categoryText.Size = new Size(489, 33);
             categoryText.TabIndex = 2;
             // 
             // priceText
             // 
-            priceText.Location = new Point(88, 510);
+            priceText.Location = new Point(151, 498);
             priceText.Name = "priceText";
-            priceText.Size = new Size(301, 31);
+            priceText.Size = new Size(489, 31);
             priceText.TabIndex = 3;
             // 
             // memoText
             // 
-            memoText.Location = new Point(89, 574);
+            memoText.Location = new Point(151, 556);
             memoText.Name = "memoText";
-            memoText.Size = new Size(300, 31);
+            memoText.Size = new Size(489, 31);
             memoText.TabIndex = 4;
             // 
             // registerButton
             // 
-            registerButton.Location = new Point(661, 464);
+            registerButton.Location = new Point(887, 449);
             registerButton.Name = "registerButton";
-            registerButton.Size = new Size(112, 34);
+            registerButton.Size = new Size(78, 81);
             registerButton.TabIndex = 5;
             registerButton.Text = "追加";
             registerButton.UseVisualStyleBackColor = true;
@@ -90,36 +94,79 @@
             // 
             // editButton
             // 
-            editButton.Location = new Point(822, 464);
+            editButton.Location = new Point(785, 449);
             editButton.Name = "editButton";
-            editButton.Size = new Size(112, 34);
+            editButton.Size = new Size(78, 81);
             editButton.TabIndex = 6;
             editButton.Text = "編集";
             editButton.UseVisualStyleBackColor = true;
+            editButton.Click += editButton_Click;
             // 
             // deleteButton
             // 
-            deleteButton.Location = new Point(960, 464);
+            deleteButton.Location = new Point(994, 449);
             deleteButton.Name = "deleteButton";
-            deleteButton.Size = new Size(112, 34);
+            deleteButton.Size = new Size(78, 81);
             deleteButton.TabIndex = 7;
             deleteButton.Text = "削除";
             deleteButton.UseVisualStyleBackColor = true;
+            deleteButton.Click += deleteButton_Click;
             // 
             // clearButton
             // 
-            clearButton.Location = new Point(428, 556);
+            clearButton.Location = new Point(661, 553);
             clearButton.Name = "clearButton";
-            clearButton.Size = new Size(112, 34);
+            clearButton.Size = new Size(85, 34);
             clearButton.TabIndex = 8;
             clearButton.Text = "クリア";
             clearButton.UseVisualStyleBackColor = true;
+            clearButton.Click += clearButton_Click;
             // 
-            // Form1
+            // label1
+            // 
+            label1.AutoSize = true;
+            label1.Location = new Point(50, 394);
+            label1.Name = "label1";
+            label1.Size = new Size(48, 25);
+            label1.TabIndex = 9;
+            label1.Text = "日付";
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(50, 449);
+            label2.Name = "label2";
+            label2.Size = new Size(64, 25);
+            label2.TabIndex = 10;
+            label2.Text = "カテゴリ";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(50, 504);
+            label3.Name = "label3";
+            label3.Size = new Size(48, 25);
+            label3.TabIndex = 11;
+            label3.Text = "金額";
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(50, 562);
+            label4.Name = "label4";
+            label4.Size = new Size(38, 25);
+            label4.TabIndex = 12;
+            label4.Text = "メモ";
+            // 
+            // Kakeibo
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1120, 624);
+            Controls.Add(label4);
+            Controls.Add(label3);
+            Controls.Add(label2);
+            Controls.Add(label1);
             Controls.Add(clearButton);
             Controls.Add(deleteButton);
             Controls.Add(editButton);
@@ -129,9 +176,8 @@
             Controls.Add(categoryText);
             Controls.Add(datePicker);
             Controls.Add(kakeiboDataGrid);
-            Name = "Form1";
-            Text = "Form1";
-            Load += Form1_Load;
+            Name = "Kakeibo";
+            Text = "Kakeibo";
             ((System.ComponentModel.ISupportInitialize)kakeiboDataGrid).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -148,5 +194,9 @@
         private Button editButton;
         private Button deleteButton;
         private Button clearButton;
+        private Label label1;
+        private Label label2;
+        private Label label3;
+        private Label label4;
     }
 }
