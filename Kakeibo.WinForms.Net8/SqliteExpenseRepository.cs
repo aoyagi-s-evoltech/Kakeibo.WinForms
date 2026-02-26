@@ -7,7 +7,7 @@ namespace Kakeibo.WinForms
 
     internal class SqliteExpenseRepository : IExpenseRepository
     {
-        private const string ConnectionString = "Data Source=kakeibo.db";
+        private const string ConnectionString = "Data Source=expenses.db";
 
         private const string SqlSelectAll = @"
             SELECT id, date, category, price, memo
