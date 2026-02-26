@@ -29,11 +29,6 @@
         private void InitializeComponent()
         {
             kakeiboDataGrid = new DataGridView();
-            Id = new DataGridViewTextBoxColumn();
-            Date = new DataGridViewTextBoxColumn();
-            Category = new DataGridViewTextBoxColumn();
-            Price = new DataGridViewTextBoxColumn();
-            Memo = new DataGridViewTextBoxColumn();
             datePicker = new DateTimePicker();
             categoryText = new ComboBox();
             priceText = new TextBox();
@@ -48,53 +43,11 @@
             // kakeiboDataGrid
             // 
             kakeiboDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            kakeiboDataGrid.Columns.AddRange(new DataGridViewColumn[] { Id, Date, Category, Price, Memo });
             kakeiboDataGrid.Location = new Point(40, 12);
             kakeiboDataGrid.Name = "kakeiboDataGrid";
             kakeiboDataGrid.RowHeadersWidth = 62;
             kakeiboDataGrid.Size = new Size(1032, 355);
             kakeiboDataGrid.TabIndex = 0;
-            kakeiboDataGrid.CellContentClick += kakeiboDataGrid_CellContentClick;
-            // 
-            // Id
-            // 
-            Id.DataPropertyName = "Id";
-            Id.HeaderText = "id";
-            Id.MinimumWidth = 8;
-            Id.Name = "Id";
-            Id.Width = 150;
-            // 
-            // Date
-            // 
-            Date.DataPropertyName = "Date";
-            Date.HeaderText = "日付";
-            Date.MinimumWidth = 8;
-            Date.Name = "Date";
-            Date.Width = 150;
-            // 
-            // Category
-            // 
-            Category.DataPropertyName = "Category";
-            Category.HeaderText = "カテゴリ";
-            Category.MinimumWidth = 8;
-            Category.Name = "Category";
-            Category.Width = 150;
-            // 
-            // Price
-            // 
-            Price.DataPropertyName = "Price";
-            Price.HeaderText = "金額";
-            Price.MinimumWidth = 8;
-            Price.Name = "Price";
-            Price.Width = 150;
-            // 
-            // Memo
-            // 
-            Memo.DataPropertyName = "Memo";
-            Memo.HeaderText = "メモ";
-            Memo.MinimumWidth = 8;
-            Memo.Name = "Memo";
-            Memo.Width = 150;
             // 
             // datePicker
             // 
@@ -102,7 +55,6 @@
             datePicker.Name = "datePicker";
             datePicker.Size = new Size(300, 31);
             datePicker.TabIndex = 1;
-            datePicker.ValueChanged += dateTimePicker1_ValueChanged;
             // 
             // categoryText
             // 
@@ -111,7 +63,6 @@
             categoryText.Name = "categoryText";
             categoryText.Size = new Size(300, 33);
             categoryText.TabIndex = 2;
-            categoryText.SelectedIndexChanged += category_SelectedIndexChanged;
             // 
             // priceText
             // 
@@ -135,7 +86,7 @@
             registerButton.TabIndex = 5;
             registerButton.Text = "追加";
             registerButton.UseVisualStyleBackColor = true;
-            registerButton.Click += registerButton_Click_1;
+            registerButton.Click += registerButton_Click;
             // 
             // editButton
             // 
@@ -197,10 +148,5 @@
         private Button editButton;
         private Button deleteButton;
         private Button clearButton;
-        private DataGridViewTextBoxColumn Id;
-        private DataGridViewTextBoxColumn Date;
-        private DataGridViewTextBoxColumn Category;
-        private DataGridViewTextBoxColumn Price;
-        private DataGridViewTextBoxColumn Memo;
     }
 }

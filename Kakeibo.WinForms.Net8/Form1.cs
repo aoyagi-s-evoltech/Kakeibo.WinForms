@@ -167,30 +167,5 @@ namespace Kakeibo.WinForms.Net8
             priceText.Text = "";
             memoText.Text = "";
         }
-
-
-        private void kakeiboDataGrid_CellContentClick(object sender, DataGridViewCellEventArgs e)
-        {
-        }
-        private void dateTimePicker1_ValueChanged(object sender, EventArgs e)
-        {
-        }
-        private void category_SelectedIndexChanged(object sender, EventArgs e)
-        {
-        }
-
-        private void registerButton_Click_1(object sender, EventArgs e)
-        {
-            var expense = new Expense
-                {
-                    Date = datePicker.Value,
-                    Category = categoryText.Text,
-                    Price = int.Parse(priceText.Text),
-                    Memo = memoText.Text
-                };
-
-            repository.Insert(expense);
-            Reload();
-        }
     }
 }
