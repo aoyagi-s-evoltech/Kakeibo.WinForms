@@ -28,6 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
             kakeiboDataGrid = new DataGridView();
             datePicker = new DateTimePicker();
             categoryText = new ComboBox();
@@ -41,15 +44,26 @@
             label2 = new Label();
             label3 = new Label();
             label4 = new Label();
+            No = new DataGridViewTextBoxColumn();
+            Id = new DataGridViewTextBoxColumn();
+            Date = new DataGridViewTextBoxColumn();
+            Category = new DataGridViewTextBoxColumn();
+            Price = new DataGridViewTextBoxColumn();
+            Memo = new DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)kakeiboDataGrid).BeginInit();
             SuspendLayout();
             // 
             // kakeiboDataGrid
             // 
+            kakeiboDataGrid.AllowUserToAddRows = false;
             kakeiboDataGrid.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            kakeiboDataGrid.Location = new Point(40, 12);
+            kakeiboDataGrid.Columns.AddRange(new DataGridViewColumn[] { No, Id, Date, Category, Price, Memo });
+            kakeiboDataGrid.Location = new Point(40, 13);
+            kakeiboDataGrid.MultiSelect = false;
             kakeiboDataGrid.Name = "kakeiboDataGrid";
+            kakeiboDataGrid.RowHeadersVisible = false;
             kakeiboDataGrid.RowHeadersWidth = 62;
+            kakeiboDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
             kakeiboDataGrid.Size = new Size(1032, 355);
             kakeiboDataGrid.TabIndex = 0;
             // 
@@ -161,6 +175,61 @@
             label4.TabIndex = 12;
             label4.Text = "メモ";
             // 
+            // No
+            // 
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleRight;
+            No.DefaultCellStyle = dataGridViewCellStyle4;
+            No.HeaderText = "No";
+            No.MinimumWidth = 8;
+            No.Name = "No";
+            No.Width = 40;
+            // 
+            // Id
+            // 
+            Id.DataPropertyName = "Id";
+            Id.HeaderText = "ID";
+            Id.MinimumWidth = 8;
+            Id.Name = "Id";
+            Id.Visible = false;
+            Id.Width = 150;
+            // 
+            // Date
+            // 
+            Date.DataPropertyName = "Date";
+            Date.HeaderText = "日付";
+            Date.MinimumWidth = 8;
+            Date.Name = "Date";
+            Date.Width = 150;
+            // 
+            // Category
+            // 
+            Category.DataPropertyName = "Category";
+            Category.HeaderText = "カテゴリ";
+            Category.MinimumWidth = 8;
+            Category.Name = "Category";
+            Category.Width = 150;
+            // 
+            // Price
+            // 
+            Price.DataPropertyName = "Price";
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle5.Format = "C2";
+            dataGridViewCellStyle5.NullValue = null;
+            Price.DefaultCellStyle = dataGridViewCellStyle5;
+            Price.HeaderText = "金額";
+            Price.MinimumWidth = 8;
+            Price.Name = "Price";
+            // 
+            // Memo
+            // 
+            Memo.DataPropertyName = "Memo";
+            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
+            Memo.DefaultCellStyle = dataGridViewCellStyle6;
+            Memo.HeaderText = "メモ";
+            Memo.MinimumWidth = 8;
+            Memo.Name = "Memo";
+            Memo.Width = 200;
+            // 
             // Kakeibo
             // 
             AutoScaleDimensions = new SizeF(10F, 25F);
@@ -202,5 +271,11 @@
         private Label label2;
         private Label label3;
         private Label label4;
+        private DataGridViewTextBoxColumn No;
+        private DataGridViewTextBoxColumn Id;
+        private DataGridViewTextBoxColumn Date;
+        private DataGridViewTextBoxColumn Category;
+        private DataGridViewTextBoxColumn Price;
+        private DataGridViewTextBoxColumn Memo;
     }
 }
