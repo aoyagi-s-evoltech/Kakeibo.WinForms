@@ -55,32 +55,34 @@
             // 
             // datePicker
             // 
-            datePicker.Location = new Point(159, 397);
+            datePicker.Location = new Point(124, 394);
             datePicker.Name = "datePicker";
-            datePicker.Size = new Size(449, 31);
+            datePicker.Size = new Size(474, 31);
             datePicker.TabIndex = 1;
             // 
             // categoryText
             // 
             categoryText.FormattingEnabled = true;
             categoryText.Items.AddRange(new object[] { "食費", "日用品", "衣服", "交通費", "固定費", "医療", "交際費", "娯楽", "美容", "その他" });
-            categoryText.Location = new Point(159, 447);
+            categoryText.Location = new Point(124, 447);
             categoryText.Name = "categoryText";
-            categoryText.Size = new Size(449, 33);
+            categoryText.Size = new Size(474, 33);
             categoryText.TabIndex = 2;
             // 
             // priceText
             // 
-            priceText.Location = new Point(159, 507);
+            priceText.Location = new Point(124, 504);
             priceText.Name = "priceText";
-            priceText.Size = new Size(449, 31);
+            priceText.Size = new Size(474, 31);
             priceText.TabIndex = 3;
             // 
             // memoText
             // 
-            memoText.Location = new Point(159, 562);
+            memoText.Location = new Point(124, 562);
+            memoText.Multiline = true;
             memoText.Name = "memoText";
-            memoText.Size = new Size(449, 31);
+            memoText.ScrollBars = ScrollBars.Horizontal;
+            memoText.Size = new Size(474, 31);
             memoText.TabIndex = 4;
             // 
             // registerButton
@@ -122,42 +124,6 @@
             clearButton.Text = "クリア";
             clearButton.UseVisualStyleBackColor = true;
             clearButton.Click += clearButton_Click;
-            // 
-            // label1
-            // 
-            label1.AutoSize = true;
-            label1.Location = new Point(40, 402);
-            label1.Name = "label1";
-            label1.Size = new Size(48, 25);
-            label1.TabIndex = 9;
-            label1.Text = "日付";
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(40, 455);
-            label2.Name = "label2";
-            label2.Size = new Size(64, 25);
-            label2.TabIndex = 10;
-            label2.Text = "カテゴリ";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(40, 507);
-            label3.Name = "label3";
-            label3.Size = new Size(48, 25);
-            label3.TabIndex = 11;
-            label3.Text = "金額";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(40, 562);
-            label4.Name = "label4";
-            label4.Size = new Size(38, 25);
-            label4.TabIndex = 12;
-            label4.Text = "メモ";
             // 
             // label1
             // 
@@ -215,6 +181,7 @@
             Controls.Add(kakeiboDataGrid);
             Name = "Kakeibo";
             Text = "Kakeibo";
+            Load += Kakeibo_Load;
             ((System.ComponentModel.ISupportInitialize)kakeiboDataGrid).EndInit();
             ResumeLayout(false);
             PerformLayout();
