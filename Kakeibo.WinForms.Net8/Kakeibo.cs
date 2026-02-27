@@ -103,6 +103,13 @@ namespace Kakeibo.WinForms.Net8
         /// <param name="e">イベントデータ</param>
         private void registerButton_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrWhiteSpace(categoryText.Text))
+            {
+                MessageBox.Show("カテゴリを入力してください。", "入力エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+
             var expense = new Expense
             {
                 Date = datePicker.Value,
