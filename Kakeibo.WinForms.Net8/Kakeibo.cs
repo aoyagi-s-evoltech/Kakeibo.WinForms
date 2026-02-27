@@ -38,6 +38,7 @@ namespace Kakeibo.WinForms.Net8
         /// <param name="e">イベントデータ</param>
         private void Kakeibo_Load(object sender, EventArgs e)
         {
+            // リポジトリの初期化
             if (File.Exists("expenses.db"))
             {
                 repository = new SqliteExpenseRepository();
@@ -47,88 +48,22 @@ namespace Kakeibo.WinForms.Net8
                 repository = new XmlExpenseRepository();
             }
 
-// ==========GUIに落とし込みたいけど心配==========
-            // DataTableの列
-            table.Columns.Add("Id", typeof(int));
-            table.Columns.Add("Date", typeof(DateTime));
-            table.Columns.Add("Category", typeof(string));
-            table.Columns.Add("Price", typeof(int));
-            table.Columns.Add("Memo", typeof(string));
+            // DataTableの列定義
+            if(table.Columns.Count == 0)
+            {
+                table.Columns.Add("Id", typeof(int));
+                table.Columns.Add("Date", typeof(DateTime));
+                table.Columns.Add("Category", typeof(string));
+                table.Columns.Add("Price", typeof(int));
+                table.Columns.Add("Memo", typeof(string));
+            }
 
             kakeiboDataGrid.AutoGenerateColumns = false;
-
-            // DataGridViewの列をコードで作る
-            kakeiboDataGrid.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "Id",
-                HeaderText = "ID",
-                DataPropertyName = "Id",
-                Visible = false
-            });
-
-            kakeiboDataGrid.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "Date",
-                HeaderText = "日付",
-                DataPropertyName = "Date"
-            });
-
-            kakeiboDataGrid.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "Category",
-                HeaderText = "カテゴリ",
-                DataPropertyName = "Category"
-            });
-
-            kakeiboDataGrid.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "Price",
-                HeaderText = "金額",
-                DataPropertyName = "Price"
-            });
-
-            kakeiboDataGrid.Columns.Add(new DataGridViewTextBoxColumn
-            {
-                Name = "Memo",
-                HeaderText = "メモ",
-                DataPropertyName = "Memo"
-            });
-
-            // No列(連番)
-            kakeiboDataGrid.Columns.Insert(0, new DataGridViewTextBoxColumn
-            {
-                Name = "No",
-                HeaderText = "No",
-                ReadOnly = true,
-                Width = 40
-            });
-
-            // No 列
-            kakeiboDataGrid.Columns["No"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            kakeiboDataGrid.Columns["No"].Width = 40;
-            // 金額列
-            kakeiboDataGrid.Columns["Price"].DefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleRight;
-            kakeiboDataGrid.Columns["Price"].DefaultCellStyle.Format = "N0";
-            kakeiboDataGrid.Columns["Price"].Width = 100;
-
-            // メモ列
-            kakeiboDataGrid.Columns["Memo"].DefaultCellStyle.WrapMode = DataGridViewTriState.True;
-            kakeiboDataGrid.Columns["Memo"].Width = 200;
-            // 行の高さ自動調整
-            kakeiboDataGrid.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            // 行ヘッダー非表示
-            kakeiboDataGrid.RowHeadersVisible = false;
-            // 選択行を分かりやすく
-            kakeiboDataGrid.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            kakeiboDataGrid.MultiSelect = false;
-
 
             kakeiboDataGrid.DataSource = table;
 
             Reload();
         }
-// ==========GUIに落とし込みたいけど心配==========
-
 
         /// <summary>
         /// データをリポジトリから読み込み、DataGridViewに反映する

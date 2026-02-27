@@ -28,9 +28,9 @@
         /// </summary>
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             kakeiboDataGrid = new DataGridView();
             datePicker = new DateTimePicker();
             categoryText = new ComboBox();
@@ -177,8 +177,8 @@
             // 
             // No
             // 
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleRight;
-            No.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleRight;
+            No.DefaultCellStyle = dataGridViewCellStyle1;
             No.HeaderText = "No";
             No.MinimumWidth = 8;
             No.Name = "No";
@@ -212,19 +212,20 @@
             // Price
             // 
             Price.DataPropertyName = "Price";
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleRight;
-            dataGridViewCellStyle5.Format = "C2";
-            dataGridViewCellStyle5.NullValue = null;
-            Price.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleRight;
+            dataGridViewCellStyle2.Format = "C0";
+            dataGridViewCellStyle2.NullValue = null;
+            Price.DefaultCellStyle = dataGridViewCellStyle2;
             Price.HeaderText = "金額";
             Price.MinimumWidth = 8;
             Price.Name = "Price";
+            Price.Width = 150;
             // 
             // Memo
             // 
             Memo.DataPropertyName = "Memo";
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
-            Memo.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            Memo.DefaultCellStyle = dataGridViewCellStyle3;
             Memo.HeaderText = "メモ";
             Memo.MinimumWidth = 8;
             Memo.Name = "Memo";
