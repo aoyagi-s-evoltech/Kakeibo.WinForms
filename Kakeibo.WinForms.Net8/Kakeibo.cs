@@ -20,15 +20,13 @@ namespace Kakeibo.WinForms.Net8
         public Kakeibo()
         {
             InitializeComponent();
-            // SQLitePCL.rawを初期化
+
+            // SQLiteの初期化
             SQLitePCL.Batteries_V2.Init();
+
+            // リポジトリとDataTableの準備
             repository = new SqliteExpenseRepository();
             table = new DataTable();
-        }
-
-        private void Kakeibo_Load1(object? sender, EventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         /// <summary>
@@ -39,7 +37,7 @@ namespace Kakeibo.WinForms.Net8
         /// <param name="e">イベントデータ</param>
         private void Kakeibo_Load(object sender, EventArgs e)
         {
-            // リポジトリの初期化
+            // 保存用ファイルの有無を確認し、使用するリポジトリを選択
             if (File.Exists("expenses.db"))
             {
                 repository = new SqliteExpenseRepository();
@@ -49,8 +47,8 @@ namespace Kakeibo.WinForms.Net8
                 repository = new XmlExpenseRepository();
             }
 
-            // DataTableの列定義
-            if(table.Columns.Count == 0)
+            // DataGridViewに紐付けるDataTableの列を定義する
+            if (table.Columns.Count == 0)
             {
                 table.Columns.Add("Id", typeof(int));
                 table.Columns.Add("Date", typeof(DateTime));
@@ -59,10 +57,13 @@ namespace Kakeibo.WinForms.Net8
                 table.Columns.Add("Memo", typeof(string));
             }
 
+            // 列をDataGridViewに手動で追加するため、AutoGenerateColumnsをfalseに設定する
             kakeiboDataGrid.AutoGenerateColumns = false;
 
+            // DataGridViewとDataTableを紐付ける
             kakeiboDataGrid.DataSource = table;
 
+            // データの読み込み
             Reload();
         }
 
@@ -71,15 +72,18 @@ namespace Kakeibo.WinForms.Net8
         /// </summary>
         /// <remarks> 
         /// DataTableを一度クリアしてから再構築する
-        /// No列は1からの連番を振り直す
-        /// DataGridViewのDataSourceを再設定して反映させる
+        /// 最新のデータを1行ずつDataTableに追加していく
+        /// 追加後、No列に連番を振る
         /// </remarks>
         private void Reload()
         {
+            // リポジトリから全てのデータを取得する
             var items = repository.GetAll();
+            // DataTableを一度クリアする
             table.Rows.Clear();
 
-            foreach (var expense in items)
+            // 取得したデータを1行ずつDataTableに追加する
+            foreach(var expense in items)
             {
                 table.Rows.Add(
                     expense.Id,
@@ -90,8 +94,8 @@ namespace Kakeibo.WinForms.Net8
                 );
             }
 
-            // No列に連番を振る
-            for (int i = 0; i < kakeiboDataGrid.Rows.Count; i++)
+            // No列を1から連番で振る
+            for(int i = 0; i < kakeiboDataGrid.Rows.Count; i++)
             {
                 kakeiboDataGrid.Rows[i].Cells["No"].Value = i + 1;
             }
@@ -105,7 +109,10 @@ namespace Kakeibo.WinForms.Net8
         private void registerButton_Click(object sender, EventArgs e)
         {
             // 入力内容のチェック
-            if (!CheckInput(out int price)) return;
+            if (!CheckInput(out int price))
+            {
+                return;
+            }
 
             // 問題ないとわかったデータでリポジトリに登録処理を行う
             var expense = new Expense
@@ -116,6 +123,7 @@ namespace Kakeibo.WinForms.Net8
                 Memo = memoText.Text
             };
 
+            // 登録処理を行った後、一覧を更新する
             repository.Insert(expense);
             Reload();
         }
@@ -134,11 +142,16 @@ namespace Kakeibo.WinForms.Net8
                 return;
             }
 
-            // 入力内容のチェック
-            if(!CheckInput(out int price)) return;
+            // 入力内容の妥当性をチェック
+            if (!CheckInput(out int price))
+            {
+                return;
+            }
 
+            // 選択された行のIDを取得する
             int id = (int)kakeiboDataGrid.CurrentRow.Cells["Id"].Value;
 
+            // 編集後の内容をもとにリポジトリの更新処理を行う
             var expense = new Expense
             {
                 Id = id,
@@ -148,6 +161,7 @@ namespace Kakeibo.WinForms.Net8
                 Memo = memoText.Text
             };
 
+            // 更新処理を行った後、一覧を更新する
             repository.Update(expense);
             Reload();
         }
@@ -166,48 +180,56 @@ namespace Kakeibo.WinForms.Net8
                 return;
             }
 
+            // 選択された行のIDを取得する
             int id = (int)kakeiboDataGrid.CurrentRow.Cells["Id"].Value;
+            // 削除処理を行った後、一覧を更新する
             repository.Delete(id);
             Reload();
         }
 
         /// <summary>
-        /// 入力欄を初期状態に戻す
+        /// 確認画面を表示し、承諾された場合に入力欄をリセットする
         /// </summary>
         /// <param name="sender">クリアボタン</param>
         /// <param name="e">イベントデータ</param>
-        /// <remarks>
-        /// 日付は今日の日付に戻す
-        /// カテゴリは未選択状態に戻す
-        /// 金額とメモは空文字にする
-        /// </remarks>
         private void clearButton_Click(object sender, EventArgs e)
         {
-            datePicker.Value = DateTime.Today;
-            categoryText.SelectedIndex = -1;
-            categoryText.Text = "";
-            priceText.Text = "";
-            memoText.Text = "";
+            // 確認画面を表示する
+            DialogResult result = MessageBox.Show(this, "入力内容をクリアしますか？", "確認", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+
+            // クリアする場合は入力欄を初期状態に戻す
+            if (result == DialogResult.Yes)
+            {
+                datePicker.Value = DateTime.Today;
+                categoryText.SelectedIndex = -1;
+                categoryText.Text = "";
+                priceText.Text = "";
+                memoText.Text = "";
+            }
+            else
+            {
+                // クリアしない場合は何もしない
+            }
         }
-       
+
         /// <summary>
-        /// 入力チェック
+        /// 入力された内容が有効かどうかを確認する
         /// </summary>
         /// <param name="price">入力された金額</param>
-        /// <returns>入力が整数の場合はtrue、それ以外の無効な入力の場合はfalse </returns>
+        /// <returns>入力が有効な値の場合はtrue、無効な値の場合はfalse</returns>
         private bool CheckInput(out int price)
         {
             // 初期化
             price = 0;
 
-            // カテゴリのチェック
-            if(string.IsNullOrWhiteSpace(categoryText.Text))
+            // カテゴリが空でないか確認
+            if (string.IsNullOrWhiteSpace(categoryText.Text))
             {
                 MessageBox.Show(this, "カテゴリを入力してください。", "入力エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
 
-            // 金額のチェック
+            // 金額が数値として正しいか確認
             if (!int.TryParse(priceText.Text, out price))
             {
                 MessageBox.Show(this, "金額は整数で入力してください。", "入力エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning);
@@ -219,12 +241,54 @@ namespace Kakeibo.WinForms.Net8
         }
 
         /// <summary>
-        /// データが存在するかどうかを確認する
+        /// 一覧に表示可能なデータが存在するかどうかを確認する
         /// </summary>
         /// <returns>データが存在する場合はtrue、存在しない場合はfalse</returns>
         private bool HasData()
         {
             return kakeiboDataGrid.Rows.Count > 0;
+        }
+
+        /// <summary>
+        /// 金額のセルの形式を設定する
+        /// </summary>
+        /// <param name="sender">DataGridView</param>
+        /// <param name="e">セルの書式設定イベントデータ</param>
+        private void kakeiboDataGrid_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            // 処理しているセルが「金額(Price)」の列でない場合は何もしない
+            var targetColumn = kakeiboDataGrid.Columns[e.ColumnIndex];
+            if (targetColumn.Name != "Price")
+            {
+                return;
+            }
+
+            // セルの値を文字列として取得する
+            string text = e.Value.ToString();
+            // 「\」「,」「-」などの記号が含まれる場合も数値として正しく解析できるようにする
+            var style = System.Globalization.NumberStyles.AllowCurrencySymbol | System.Globalization.NumberStyles.Number;
+
+            // セルのスタイルを取得する
+            var penColor = e.CellStyle;
+
+            // 金額がマイナスの値の場合は赤色、正の値の場合は黒色で表示する
+            if (decimal.TryParse(
+                    text,
+                    style,
+                    null,
+                    out decimal price))
+            {
+                if (price < 0)
+                {
+                    penColor.ForeColor = Color.Red;
+                    penColor.SelectionForeColor = Color.Red;
+                }
+                else
+                {
+                    penColor.ForeColor = Color.Black;
+                    penColor.SelectionForeColor = Color.Black;
+                }
+            }
         }
     }
 }
