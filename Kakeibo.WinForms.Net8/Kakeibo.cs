@@ -20,6 +20,7 @@ namespace Kakeibo.WinForms.Net8
         public Kakeibo()
         {
             InitializeComponent();
+            // SQLitePCL.rawを初期化
             SQLitePCL.Batteries_V2.Init();
             repository = new SqliteExpenseRepository();
             table = new DataTable();
@@ -103,18 +104,15 @@ namespace Kakeibo.WinForms.Net8
         /// <param name="e">イベントデータ</param>
         private void registerButton_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(categoryText.Text))
-            {
-                MessageBox.Show("カテゴリを入力してください。", "入力エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            // 入力内容のチェック
+            if (!CheckInput(out int price)) return;
 
-
+            // 問題ないとわかったデータでリポジトリに登録処理を行う
             var expense = new Expense
             {
                 Date = datePicker.Value,
                 Category = categoryText.Text,
-                Price = int.Parse(priceText.Text),
+                Price = price,
                 Memo = memoText.Text
             };
 
@@ -129,10 +127,15 @@ namespace Kakeibo.WinForms.Net8
         /// <param name="e">イベントデータ</param>
         private void editButton_Click(object sender, EventArgs e)
         {
-            if (kakeiboDataGrid.CurrentRow == null)
+            // 行が選択されているかチェック
+            if (!HasData())
             {
+                MessageBox.Show(this, "編集できるデータがありません。", "通知", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
+
+            // 入力内容のチェック
+            if(!CheckInput(out int price)) return;
 
             int id = (int)kakeiboDataGrid.CurrentRow.Cells["Id"].Value;
 
@@ -141,7 +144,7 @@ namespace Kakeibo.WinForms.Net8
                 Id = id,
                 Date = datePicker.Value,
                 Category = categoryText.Text,
-                Price = int.Parse(priceText.Text),
+                Price = price,
                 Memo = memoText.Text
             };
 
@@ -156,13 +159,14 @@ namespace Kakeibo.WinForms.Net8
         /// <param name="e">イベントデータ</param>
         private void deleteButton_Click(object sender, EventArgs e)
         {
-            if (kakeiboDataGrid.SelectedRows.Count == 0)
+            // 行が選択されているかチェック
+            if (!HasData())
             {
-                MessageBox.Show("削除する行を選択してください。");
+                MessageBox.Show(this, "削除できるデータがありません。", "通知", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
-            int id = (int)kakeiboDataGrid.SelectedRows[0].Cells["Id"].Value;
+            int id = (int)kakeiboDataGrid.CurrentRow.Cells["Id"].Value;
             repository.Delete(id);
             Reload();
         }
@@ -184,6 +188,43 @@ namespace Kakeibo.WinForms.Net8
             categoryText.Text = "";
             priceText.Text = "";
             memoText.Text = "";
+        }
+       
+        /// <summary>
+        /// 入力チェック
+        /// </summary>
+        /// <param name="price">入力された金額</param>
+        /// <returns>入力が整数の場合はtrue、それ以外の無効な入力の場合はfalse </returns>
+        private bool CheckInput(out int price)
+        {
+            // 初期化
+            price = 0;
+
+            // カテゴリのチェック
+            if(string.IsNullOrWhiteSpace(categoryText.Text))
+            {
+                MessageBox.Show(this, "カテゴリを入力してください。", "入力エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // 金額のチェック
+            if (!int.TryParse(priceText.Text, out price))
+            {
+                MessageBox.Show(this, "金額は整数で入力してください。", "入力エラー", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return false;
+            }
+
+            // OKならtrueを返す
+            return true;
+        }
+
+        /// <summary>
+        /// データが存在するかどうかを確認する
+        /// </summary>
+        /// <returns>データが存在する場合はtrue、存在しない場合はfalse</returns>
+        private bool HasData()
+        {
+            return kakeiboDataGrid.Rows.Count > 0;
         }
     }
 }
